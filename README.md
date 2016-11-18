@@ -1,4 +1,4 @@
-### Financify
+### Financify (Prototype)
 A Ruby on Rails app used to find and track stocks
 
 #### Features
