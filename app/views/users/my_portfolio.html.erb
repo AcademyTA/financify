@@ -1,2 +1,9 @@
 <%= render 'stocks/lookup' %>
 <%= render 'stocks/list' %>
+
+<%= link_to 'Update Stock Prices',
+    update_stocks_path,
+    id: 'update-stocks',
+    class:  'btn btn-md btn-info' %>
+
+<hr>

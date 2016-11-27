@@ -1,18 +1,22 @@
-var hide_spinner = function(){
+var hideSpinner = function(){
   $('#spinner').hide();
 }
 
-var show_spinner = function(){
+var showSpinner = function(){
   $('#spinner').show();
+}
+
+var showBigSpinner = function(){
+  $('#big-spinner').show();
 }
 
 var init_stock_lookup = function() {
   $('#stock-lookup-form').on('ajax:before', function(event, data, status) {
-    show_spinner();
+    showSpinner();
   });
 
   $('#stock-lookup-form').on('ajax:after', function(event, data, status) {
-    hide_spinner();
+    hideSpinner();
   });
 
   $('#stock-lookup-form').on('ajax:success', function(event, data, status) {
@@ -21,7 +25,7 @@ var init_stock_lookup = function() {
   });
 
   $('#stock-lookup-form').on('ajax:error', function(event, xhr, status, error) {
-    hide_spinner();
+    hideSpinner();
     $('#stock-lookup-results').replaceWith(' ');
     $('#stock-lookup-errors').replaceWith('Stock was not found.');
   });
@@ -29,4 +33,11 @@ var init_stock_lookup = function() {
 
 $(document).ready(function() {
   init_stock_lookup();
+
+  // $('#stock-portfolio')
+
+  $('#update-stocks').on('click', function(event) {
+    $('#stock-portfolio').hide()
+    showBigSpinner()
+  })
 })

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get  'search_stocks',  to: 'stocks#search'
+  get  'update_stocks',  to: 'stocks#update_stocks_prices'
   get  'my_portfolio',   to: 'users#my_portfolio'
   get  'my_friends',     to: 'users#my_friends'
   get  'search_friends', to: "users#search"
