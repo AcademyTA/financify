@@ -13,11 +13,11 @@ class StocksController < ApplicationController
   end
 
   def update_stocks_prices
-    @stocks = current_user.stocks
+    @user        = current_user
+    @user_stocks = @user.stocks
 
-    @stocks.each { |stock| stock.update(last_price: stock.price) }
+    @user_stocks.each { |stock| stock.update(last_price: stock.price) }
 
-    flash[:notice] = 'Stocks Updated'
-    redirect_to my_portfolio_path
+    render partial: 'stocks/list'
   end
 end

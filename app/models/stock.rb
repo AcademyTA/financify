@@ -29,4 +29,8 @@ class Stock < ActiveRecord::Base
       'Unavailable'
     end
   end
+
+  def update_time
+    updated_at.in_time_zone.strftime("%B %e, %Y at %l:%M%P %Z")
+  end
 end

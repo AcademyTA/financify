@@ -3,7 +3,14 @@
 
 <%= link_to 'Update Stock Prices',
     update_stocks_path,
-    id: 'update-stocks',
+    remote: :true,
+    id: 'update-stocks-button',
     class:  'btn btn-md btn-info' %>
 
+<br>
+<br>
+<div id='last-updated'>
+  <strong>Stocks Last Updated: </strong>
+  <em><%= @user_stocks.first.update_time %></em>
+</div>
 <hr>
