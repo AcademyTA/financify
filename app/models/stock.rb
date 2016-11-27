@@ -3,7 +3,7 @@ class Stock < ActiveRecord::Base
   has_many :users, through: :user_stocks
 
   def self.find_by_ticker(ticker_symbol)
-    where(ticker: ticker_symbol).first
+    find_by(ticker: ticker_symbol)
   end
 
   def self.new_from_lookup(ticker_symbol)

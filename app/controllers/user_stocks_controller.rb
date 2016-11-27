@@ -1,31 +1,20 @@
 class UserStocksController < ApplicationController
 
   def create
-    if params[:stock_id].present?
-      @user_stock = UserStock.new(stock_id: params[:stock_id], user: current_user)
-    else
-      stock = Stock.find_by_ticker(params[:stock_ticker])
-
-      if stock
-        @user_stock = UserStock.new(user: current_user, stock: stock)
+    @user_stock =
+      if params[:stock_id].present?
+        UserStock.new(user: current_user, stock_id: params[:stock_id])
       else
-        stock = Stock.new_from_lookup(params[:stock_ticker])
-
-        if stock.save
-          @user_stock = UserStock.new(user: current_user, stock: stock)
-        else
-          @user_stock = nil
-          flash[:alert] = 'Stock is not available'
-        end
+        stock = create_stock
+        UserStock.new(user: current_user, stock: stock)
       end
-    end
 
     if @user_stock.save
-      redirect_to my_portfolio_path
       flash[:notice] = "Stock #{@user_stock.stock.ticker} was successfully added"
-    else
       redirect_to my_portfolio_path
+    else
       flash[:alert] = "Something went wrong. #{@user_stock.errors.inspect}"
+      redirect_to my_portfolio_path
     end
   end
 
@@ -33,11 +22,11 @@ class UserStocksController < ApplicationController
     @user_stock = UserStock.find_by(stock_id: params[:id])
 
     if @user_stock.destroy
+      flash[:notice] = 'Stock was successfully removed from portfolio.'
       redirect_to my_portfolio_path
-      flash[:alert] = 'Stock was successfully removed from portfolio.'
     else
-      redirect_to my_portfolio_path
       flash[:alert] = 'Unable to remove stock from portfolio.'
+      redirect_to my_portfolio_path
     end
   end
 
@@ -45,5 +34,13 @@ class UserStocksController < ApplicationController
 
   def user_stock_params
     params.require(:user_stock).permit(:user_id, :stock_id)
+  end
+
+  def create_stock
+    Stock.create(
+      ticker: params[:stock_ticker],
+      name: params[:stock_name],
+      last_price: BigDecimal.new(params[:stock_price])
+    )
   end
 end

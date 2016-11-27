@@ -8,11 +8,13 @@
             params[:stock],
             placeholder: 'Stock ticker symbol',
             autofocus: true,
+            required: true,
             class: 'form-control search-box input-md' %>
       </div>
       <div class='col-md-2'>
         <%= button_tag(type: :submit, class: 'btn btn-md btn-success') do %>
-          <i class='fa fa-search'></i> Look up a stock
+          <i class='fa fa-search'></i>
+          Look up a stock
         <% end %>
       </div>
     </div>
@@ -30,6 +32,8 @@
             user_stocks_path(
               user: current_user,
               stock_ticker: @stock.ticker,
+              stock_name: @stock.name,
+              stock_price: @stock.last_price,
               stock_id: @stock.id? ? @stock.id : ''),
             class: 'btn btn-xs btn-success',
             method: :post %>

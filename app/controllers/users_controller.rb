@@ -30,9 +30,11 @@ class UsersController < ApplicationController
     current_user.friendships.build(friend_id: @friend.id)
 
     if current_user.save
-      redirect_to my_friends_path, notice: 'Friend was successfully added'
+      flash[:notice] = 'Friend was successfully added'
+      redirect_to my_friends_path
     else
-      redirect_to my_friends_path, flash[:error] = 'There was an error with adding user as friend'
+      flash[:error] = "There was an error adding #{@friend.full_name} as friend"
+      redirect_to my_friends_path
     end
   end
 end
